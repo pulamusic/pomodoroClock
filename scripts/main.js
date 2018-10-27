@@ -1,114 +1,119 @@
 $(document).ready(function() {
-  const bellRing = "bellRing"
-  const buttonClick = "buttonClick"
-  let countClock = parseInt($("#session-length").html())
+  const bellRing = document.getElementById("beep")
+  const buttonClick = document.getElementById("click")
+  let countSession = parseInt($("#session-length").html())
   let countBreak = parseInt($("#break-length").html())
   let timeLeftDefault = 0
 
-  // Ion Sounds
-  ion.sound({
-    sounds: [
-        {
-            alias: bellRing,
-            name: "bell_ring",
-            path: "sounds/",
-            volume: 0.7
-        },
-        {
-            alias: buttonClick,
-            name: "button_click_on",
-            path: "sounds/",
-            volume: 0.3
-        }
-    ],
-    path: "sounds/",
-    preload: true,
-    multiplay: true
-  })
+  // audio functions
+  function playBell() {
+    bellRing.pause()
+    bellRing.currentTime = 0
+    bellRing.play()
+  }
 
-  // function to play ion sounds
-  function soundAlarm(alarm) {
-  	ion.sound.play(alarm);
+  function playClick() {
+    buttonClick.pause()
+    buttonClick.currentTime = 0
+    buttonClick.play()
   }
 
   // hide timer-label onload
   $("#timer-label").hide()
-  // hide reset button onload
-  $("#reset").hide()
 
   // start/stop button for session timer
   $("#start_stop").on("click", function() {
-    $("#start_stop").html("pause")
+    playClick()
+
+    if ($("#start_stop").html() === "start") {
+      // stop the timer CODE HERE
+      $("#start_stop").html("pause")
+    } else {
+      // start the timer CODE HERE
+      $("#start_stop").html("start")
+    }
+
     const counterClock = setInterval(timer, 1000)
     // set clock to count minutes
-    countClock *= 60;
+    countSession *= 60;
 
     // NOTE TO SELF: This function is quite wonky. It doesn't play the sound files. Bummer dude.
     function timer() {
       // hide extra clock elements
-      $("#session-decrement, #session-increment, .timer, .break").hide()
+      $(".timer, .break").hide()
       // show timer-label
       $("#timer-label").show()
-      // increase font size for time-left
-      $("#time-left").addClass("bigger")
+
+      // show session time in #timer-label element
+      $("#time-left").html(countSession)
+
       // clock decrements
-      countClock -= 1
-      // when clock reaches zero
-      if (countClock === 0) {
-        // clear the counter
-        clearInterval(counterClock)
-        // Play bell audio
-        soundAlarm(bellRing)
-        // start breakTimer
-        const startBreak = setInterval(breakTimer, 1000)
+      countSession -= 1
+
+      if (countSession % 60 >= 10) {
+        $("#time-left").html(Math.floor(countSession / 60) + ":" + countSession % 60)
+      } else {
+        $("#time-left").html(Math.floor(countSession / 60) + ":" + "0" + countSession % 60)
       }
 
-      if (countClock % 60 >= 10) {
-        $("#session-length").html(Math.floor(countClock / 60) + ":" + countClock % 60)
-      } else {
-        $("#session-length").html(Math.floor(countClock / 60) + ":" + "0" + countClock % 60)
+      // when clock reaches zero
+      if (countSession === 0) {
+        // clear the counter
+        clearInterval(counterClock)
+        // play bell audio
+        playBell()
+
+        breakTimer()
       }
-      return startBreak
+      // setInterval(breakTimer, 1000)
+      // breakTimer()
     }
 
     function breakTimer() {
-      const counterBreak = setInterval(breakTimer, 1000)
+      const counterClock = setInterval(breakTimer, 1000)
       // set break clock to count minutes
       countBreak *= 60;
       // decrement break timer
       countBreak -= 1
 
-      if (countBreak === 0) {
-        clearInterval(counterBreak)
-        // Play bell audio
-        soundAlarm(bellRing)
-
-        // show session time snf break length
-        $(".timer").show()
-        $(".break").show()
-
-        // show reset button
-        $("#reset").show()
-      }
-
       if (countBreak % 60 >= 10) {
-        $("#break-length").html(Math.floor(countBreak / 60) + ":" + countBreak % 60)
+        $("#time-left").html(Math.floor(countBreak / 60) + ":" + countBreak % 60)
       } else {
-        $("#break-length").html(Math.floor(countBreak / 60) + ":" + "0" + countBreak % 60)
+        $("#time-left").html(Math.floor(countBreak / 60) + ":" + "0" + countBreak % 60)
       }
+
+      if (countBreak === 0) {
+        clearInterval(counterClock)
+        // Play bell audio
+        playBell()
+
+        timer()
+
+        // // show session time snf break length
+        // $(".timer").show()
+        // $(".break").show()
+        //
+        // // show reset button
+        // $("#reset").show()
+      }
+
+
+      // timer()
     }
   })
 
+  // BUTTONS OTHER THAN START/PAUSE
   // reset button
   $("#reset").on("click", function() {
+    // Play buttonClick audio and stop bellRing
+    playClick()
+    bellRing.pause()
+    bellRing.currentTime = 0
 
-    // Play buttonClick audio
-    soundAlarm(buttonClick)
-
-    countClock = 25
+    countSession = 25
     countBreak = 5
 
-    $("#session-length").html(countClock)
+    $("#session-length").html(countSession)
     $("#break-length").html(countBreak)
     $("#time-left").html(timeLeftDefault)
   })
@@ -116,29 +121,29 @@ $(document).ready(function() {
   // set decrement session time
   $("#session-decrement").on("click", function() {
     // Play buttonClick audio
-    soundAlarm(buttonClick)
+    playClick()
 
-    if (countClock > 1) {
-      countClock -= 1
-      $("#session-length").html(countClock)
+    if (countSession > 1) {
+      countSession -= 1
+      $("#session-length").html(countSession)
     }
   })
 
   // set increment session time
   $("#session-increment").on("click", function() {
     // Play buttonClick audio
-    soundAlarm(buttonClick)
+    playClick()
 
-    if (countClock < 60) {
-      countClock += 1
-      $("#session-length").html(countClock)
+    if (countSession < 60) {
+      countSession += 1
+      $("#session-length").html(countSession)
     }
   })
 
   // set decrement break time
   $("#break-decrement").on("click", function() {
     // Play buttonClick audio
-    soundAlarm(buttonClick)
+    playClick()
 
     if (countBreak > 1) {
       countBreak -= 1
@@ -149,7 +154,7 @@ $(document).ready(function() {
   // set increment break time
   $("#break-increment").on("click", function() {
     // Play buttonClick audio
-    soundAlarm(buttonClick)
+    playClick()
 
     if (countBreak < 60) {
       countBreak += 1
