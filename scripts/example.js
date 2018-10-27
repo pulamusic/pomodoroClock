@@ -1,10 +1,10 @@
 //Run Our jQuery
 $(document).ready(function() {
-  var gong = $("#gong")[0];
-  var countClock = parseInt($("#num-clock").html());
-  var countBreak = parseInt($("#num-break").html());
+  var gong = $("#gong")[0]
+  var countClock = parseInt($("#num-clock").html())
+  var countBreak = parseInt($("#num-break").html())
 
-  $("#reset-clock").hide();
+  $("#reset-clock").hide()
 
   $("#start").click(function(){
     var counter= setInterval(timer, 1000);

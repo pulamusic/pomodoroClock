@@ -19,14 +19,6 @@
   </head>
 
   <body>
-    <div class="audio">
-      <p>gong sound</p>
-      <!-- audio files -->
-      <audio id="#gong" preload="auto" autoplay="autoplay" controls>
-        <source src="audio/metal-gong.mp3" type="audio/mpeg">
-        <source src="audio/metal-gong.wav" type="audio/wav">
-      </audio>
-    </div>
 
     <div class="container-fluid">
 
@@ -38,24 +30,39 @@
       <div class="pomodoro">
         <div class="display"></div>
         <div class="timer">
-          <h1 id="title-timer"><u>session time</u></h1>
-          <button class="btn btn-default btn-lg" id="subtract-1-clock">-</button>
-          <h2 id="num-clock">25</h2>
-          <button class="btn btn-default btn-lg" id="add-1-clock">+</button>
-          <button class="btn btn-default btn-lg" id="reset-clock">reset</button>
+          <h1 id="session-label"><u>session length</u></h1>
+          <button class="btn btn-default btn-lg" id="session-decrement">-</button>
+          <h2 id="session-length">25</h2>
+          <button class="btn btn-default btn-lg" id="session-increment">+</button>
+          <button class="btn btn-default btn-lg" id="reset">reset</button>
+        </div>
+
+        <div id="timer-label">
+          <h1>session: </h1>
+          <h2 id="time-left">0</h2>
         </div>
 
         <div class="break">
-          <h1 id="title-break"><u>break time</u></h1>
-          <button class="btn btn-default btn-lg" id="subtract-1-break">-</button>
-          <h2 id="num-break">5</h2>
-          <button class="btn btn-default btn-lg" id="add-1-break">+</button>
+          <h1 id="break-label"><u>break length</u></h1>
+          <button class="btn btn-default btn-lg" id="break-decrement">-</button>
+          <h2 id="break-length">5</h2>
+          <button class="btn btn-default btn-lg" id="break-increment">+</button>
         </div>
 
-        <button class="btn btn-default btn-lg" id="start-btn">start</button>
+        <button class="btn btn-default btn-lg" id="start_stop">start</button>
 
       </div>
 
+    </div>
+
+    <!-- audio elements -->
+    <div class="audio">
+      <audio id="beep">
+        <source src="audio/bell_ring.mp3">
+      </audio>
+      <audio id="click">
+        <source src="audio/button_click_on.mp3">
+      </audio>
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -64,7 +71,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <!-- freeCodeCamp testing script -->
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <!-- Ion Sounds -->
+    <script src="scripts/ion.sound.js"></script>
     <!-- local script -->
-    <script src="main.js"></script>
+    <script src="scripts/main.js"></script>
   </body>
 </html>
