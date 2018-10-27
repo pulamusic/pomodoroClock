@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pomodoro Clock</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
+    <!-- local stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- favicon -->
+    <link rel="icon" href="images/favicon.ico" type="images/x-icon">
+
+  </head>
+
+  <body>
+    <div class="audio">
+      <p>gong sound</p>
+      <!-- audio files -->
+      <audio id="#gong" preload="auto" autoplay="autoplay" controls>
+        <source src="audio/metal-gong.mp3" type="audio/mpeg">
+        <source src="audio/metal-gong.wav" type="audio/wav">
+      </audio>
+    </div>
+
+    <div class="container-fluid">
+
+      <div class="jumbotron">
+        <h1>Pomodoro Clock</h1>
+        <h2>a freeCodeCamp front-end development project</h2>
+      </div>
+
+      <div class="pomodoro">
+        <div class="display"></div>
+        <div class="timer">
+          <h1 id="title-timer"><u>session time</u></h1>
+          <button class="btn btn-default btn-lg" id="subtract-1-clock">-</button>
+          <h2 id="num-clock">25</h2>
+          <button class="btn btn-default btn-lg" id="add-1-clock">+</button>
+          <button class="btn btn-default btn-lg" id="reset-clock">reset</button>
+        </div>
+
+        <div class="break">
+          <h1 id="title-break"><u>break time</u></h1>
+          <button class="btn btn-default btn-lg" id="subtract-1-break">-</button>
+          <h2 id="num-break">5</h2>
+          <button class="btn btn-default btn-lg" id="add-1-break">+</button>
+        </div>
+
+        <button class="btn btn-default btn-lg" id="start-btn">start</button>
+
+      </div>
+
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- freeCodeCamp testing script -->
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <!-- local script -->
+    <script src="main.js"></script>
+  </body>
+</html>
