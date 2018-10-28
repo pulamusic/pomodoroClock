@@ -4,7 +4,10 @@ $(document).ready(function() {
   const buttonClick = document.getElementById("click")
   let countSession = parseInt($("#session-length").html())
   let countBreak = parseInt($("#break-length").html())
+  let timeLeft = parseInt($("#time-left").html())
   let pauseResume
+  let startSession
+  let startBreak
 
   // *************AUDIO FUNCTIONS***************
   function playBell() {
@@ -32,7 +35,6 @@ $(document).ready(function() {
 
   // **************START/STOP BUTTON AND FUNCTIONS*********************
   $("#start_stop").on("click", function() {
-    // event.preventDefault()
     // show #timer-label and hide .timer and .break
     $(".timer, .break").hide()
     $("#timer-label").show()
@@ -41,24 +43,19 @@ $(document).ready(function() {
     if ($("#start_stop").html() === "start") {
       // switch button text to pause
       $("#start_stop").html("pause")
-
     } else if ($("#start_stop").html() === "pause") {
-      // change to pause button functionality
-      $("#start_stop").on("click", function() {
-        pause()
-      })
+      pause()
       // switch button text to resume
       $("#start_stop").html("resume")
     } else if ($("#start_stop").html() === "resume") {
-      $("#start_stop").on("click", function() {
-        resume()
-      })
+      resume()
       // switch button text back to pause
       $("#start_stop").html("pause")
     }
+    // NOTE: Pause and resume functions below
 
     // *********************START TIMER & CONVERT MILISECONDS TO SECONDS****************
-    const startSession = setInterval(timer, 1000)
+    startSession = setInterval(timer, 1000)
 
     countSession *= 60
     countBreak *= 60
@@ -73,9 +70,9 @@ $(document).ready(function() {
       $("#time-left").html(countSession)
 
       if (countSession === 0) {
-        clearInterval(startSession)
         playBell()
-        const startBreak = setInterval(breakTime, 1000)
+        clearInterval(startSession)
+        startBreak = setInterval(breakTime, 1000)
       }
 
       // format number output
@@ -95,8 +92,8 @@ $(document).ready(function() {
         $("#time-left").html(countBreak)
 
         if (countBreak === 0) {
+          playBell()
           clearInterval(startBreak)
-          playDoor()
         }
 
         // format number output
@@ -106,38 +103,48 @@ $(document).ready(function() {
           $("#time-left").html(Math.floor(countBreak / 60) + ":" + "0" + countBreak % 60)
         }
       }
-    }
-
-    // *****************PAUSE AND RESUME FUNCTIONS*******************
-    function pause(){
-      if(countSession > 0){
-        pauseResume = countSession
-        clearInterval(countSession)
-      } else if (countBreak > 0) {
-        pauseResume = countBreak
-        clearInterval(countBreak)
-      }
-    }
-
-    function resume(){
-      if (pauseResume = countSession) {
-        countSession = pauseResume;
-        countSession = setInterval(timer, 1000);
-      } else if (pauseResume = countBreak) {
-        countBreak = pauseResume;
-        countBreak = setInterval(timer, 1000);
-      }
+      // re-start timer
+      timer()
     }
 
   }) // end of #start_stop
+
+  // *****************PAUSE AND RESUME FUNCTIONS*******************
+  function pause(){
+    if(countSession > 0){
+      pauseResume = countSession
+      clearInterval(countSession)
+    } else if (countBreak > 0) {
+      pauseResume = countBreak
+      clearInterval(countBreak)
+    }
+  }
+
+  function resume(){
+    if (pauseResume = countSession) {
+      countSession = pauseResume;
+      countSession = setInterval(timer, 1000);
+    } else if (pauseResume = countBreak) {
+      countBreak = pauseResume;
+      countBreak = setInterval(timer, 1000);
+    }
+  }
 
   // *************RESET BUTTON******************
   $("#reset").on("click", function() {
     // reset values to default
     countSession = 25
     countBreak = 5
+    timeLeft = 0
     $("#session-length").html(countSession)
     $("#break-length").html(countBreak)
+    $("#time-left").html(timeLeft)
+
+    // stop and zero out the audio files
+    bellRing.pause()
+    bellRing.currentTime = 0
+    doorBell.pause()
+    doorBell.currentTime = 0
 
     // hide #timer-label and show .timer and .break
     $(".timer, .break").show()
