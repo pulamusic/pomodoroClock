@@ -4,6 +4,7 @@ $(document).ready(function() {
   let countSession = parseInt($("#session-length").html())
   let countBreak = parseInt($("#break-length").html())
   let timeLeftDefault = 0
+  let pause = false
 
   // audio functions
   function playBell() {
@@ -21,88 +22,93 @@ $(document).ready(function() {
   // hide timer-label onload
   $("#timer-label").hide()
 
-  // start/stop button for session timer
-  $("#start_stop").on("click", function() {
+  // START/STOP BUTTON FOR SESSION TIMER
+  $("#start_stop").on("click", function(event) {
     playClick()
+    event.preventDefault()
+    const counter = setInterval(timer, 1000)
 
     if ($("#start_stop").html() === "start") {
-      // stop the timer CODE HERE
+      // start the timer CODE GOES HERE
+
+
       $("#start_stop").html("pause")
     } else {
-      // start the timer CODE HERE
+      // stop the timer CODE HERE
+
+
       $("#start_stop").html("start")
     }
 
-    const counterClock = setInterval(timer, 1000)
+    // // set clock function
+    // let counterClock = setInterval(timer, 1000)
+
     // set clock to count minutes
     countSession *= 60;
 
-    // NOTE TO SELF: This function is quite wonky. It doesn't play the sound files. Bummer dude.
+    // Session timer
     function timer() {
       // hide extra clock elements
       $(".timer, .break").hide()
       // show timer-label
       $("#timer-label").show()
 
+      counter = countSession
+
       // show session time in #timer-label element
-      $("#time-left").html(countSession)
+      $("#time-left").html(counter)
 
       // clock decrements
-      countSession -= 1
+      counter -= 1
 
-      if (countSession % 60 >= 10) {
-        $("#time-left").html(Math.floor(countSession / 60) + ":" + countSession % 60)
+      if (counter % 60 >= 10) {
+        $("#time-left").html(Math.floor(counter / 60) + ":" + counter % 60)
       } else {
-        $("#time-left").html(Math.floor(countSession / 60) + ":" + "0" + countSession % 60)
+        $("#time-left").html(Math.floor(counter / 60) + ":" + "0" + counter % 60)
       }
 
       // when clock reaches zero
-      if (countSession === 0) {
+      if (counter === 0) {
         // clear the counter
-        clearInterval(counterClock)
+        clearInterval(counter)
         // play bell audio
         playBell()
-
-        breakTimer()
-      }
-      // setInterval(breakTimer, 1000)
-      // breakTimer()
-    }
-
-    function breakTimer() {
-      const counterClock = setInterval(breakTimer, 1000)
-      // set break clock to count minutes
-      countBreak *= 60;
-      // decrement break timer
-      countBreak -= 1
-
-      if (countBreak % 60 >= 10) {
-        $("#time-left").html(Math.floor(countBreak / 60) + ":" + countBreak % 60)
-      } else {
-        $("#time-left").html(Math.floor(countBreak / 60) + ":" + "0" + countBreak % 60)
+        // start break timer
+        // breakTime()
       }
 
-      if (countBreak === 0) {
-        clearInterval(counterClock)
-        // Play bell audio
-        playBell()
+      // counterClock = setInterval(timer, 1000)
 
-        timer()
+      function breakTime() {
+        // switch to break time
+        countBreak *= 60
 
-        // // show session time snf break length
-        // $(".timer").show()
-        // $(".break").show()
-        //
-        // // show reset button
-        // $("#reset").show()
+        $("#time-left").html(countBreak)
+
+        // clock decrements again
+        countBreak -= 1
+
+        if (countBreak % 60 >= 10) {
+          $("#time-left").html(Math.floor(countBreak / 60) + ":" + countBreak % 60)
+        } else {
+          $("#time-left").html(Math.floor(countBreak / 60) + ":" + "0" + countBreak % 60)
+        }
+
+        // when clock reaches zero
+        if (countBreak === 0) {
+          // clear the counter
+          clearInterval(counter)
+          // play bell audio
+          playBell()
+          // start session timer
+          // timer()
+        }
       }
-
-
-      // timer()
     }
   })
 
   // BUTTONS OTHER THAN START/PAUSE
+
   // reset button
   $("#reset").on("click", function() {
     // Play buttonClick audio and stop bellRing

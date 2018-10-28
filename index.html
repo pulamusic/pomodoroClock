@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <!-- local stylesheet -->
     <link rel="stylesheet" href="styles.css">
     <!-- favicon -->
@@ -38,10 +40,9 @@
 
         <div id="timer-label">
           <h1>session:</h1>
+          <h2 id="time-left">0</h2>
           <br>
-          <h2 id="time-left" class="bigger">0</h2>
-          <br>
-          <button class="btn btn-default btn-lg" id="reset">reset</button>
+          <button class="btn btn-default btn-lg" id="reset"><i class="fas fa-sync-alt"></i> reset</button>
         </div>
 
         <div class="break">
@@ -51,7 +52,7 @@
           <button class="btn btn-default btn-lg" id="break-increment">+</button>
         </div>
 
-        <button class="btn btn-default btn-lg" id="start_stop">start</button>
+        <button class="btn btn-default btn-lg" id="start_stop"><i class="fas fa-play"></i> start</button>
 
       </div>
 
