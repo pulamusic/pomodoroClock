@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <!-- local stylesheet -->
     <link rel="stylesheet" href="styles.css">
     <!-- favicon -->
@@ -27,10 +25,11 @@
       <div class="jumbotron">
         <h1>Pomodoro Clock</h1>
         <h2>a freeCodeCamp front-end development project</h2>
+        <hr>
+        <p>Enter a number of minutes for session length and break length, then press start.</p>
       </div>
 
       <div class="pomodoro">
-        <div class="display"></div>
         <div class="timer">
           <h1 id="session-label"><u>session length</u></h1>
           <button class="btn btn-default btn-lg" id="session-decrement">-</button>
@@ -39,10 +38,8 @@
         </div>
 
         <div id="timer-label">
-          <h1>session:</h1>
+          <h1 id="timer-message"></h1>
           <h2 id="time-left">0</h2>
-          <br>
-          <button class="btn btn-default btn-lg" id="reset"><i class="fas fa-sync-alt"></i> reset</button>
         </div>
 
         <div class="break">
@@ -52,7 +49,8 @@
           <button class="btn btn-default btn-lg" id="break-increment">+</button>
         </div>
 
-        <button class="btn btn-default btn-lg" id="start_stop"><i class="fas fa-play"></i> start</button>
+        <button class="btn btn-default btn-lg" id="start_stop">start</button>
+        <button class="btn btn-default btn-lg" id="reset">reset</button>
 
       </div>
 
@@ -61,7 +59,10 @@
     <!-- audio elements -->
     <div class="audio">
       <audio id="beep">
-        <source src="audio/bell_ring.mp3" volume="0.5">
+        <source src="audio/bell_ring.mp3">
+      </audio>
+      <audio id="door">
+        <source src="audio/door_bell.mp3">
       </audio>
       <audio id="click">
         <source src="audio/button_click_on.mp3">
