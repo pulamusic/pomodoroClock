@@ -60,7 +60,7 @@ button:focus {
   outline: 0;
 }
 
-#start_stop, #reset {
+#start, #pause, #reset {
   margin: 25px 0 30px 0;
 }
 

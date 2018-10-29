@@ -34,25 +34,13 @@ $(document).ready(function() {
   $("#timer-label").hide()
 
   // **************START/STOP BUTTON AND FUNCTIONS*********************
-  $("#start_stop").on("click", function() {
+  $("#start").one("click", function() {
+    // play button click sound
+    playClick()
+    // NOTE: I used .one() instead of .on() in order to prevent subsequent clicks on start button
     // show #timer-label and hide .timer and .break
-    $(".timer, .break").hide()
-    $("#timer-label").show()
-
-    // change start button to pause
-    if ($("#start_stop").html() === "start") {
-      // switch button text to pause
-      $("#start_stop").html("pause")
-    } else if ($("#start_stop").html() === "pause") {
-      pause()
-      // switch button text to resume
-      $("#start_stop").html("resume")
-    } else if ($("#start_stop").html() === "resume") {
-      resume()
-      // switch button text back to pause
-      $("#start_stop").html("pause")
-    }
-    // NOTE: Pause and resume functions below
+    $(".timer, .break").fadeOut(800)
+    $("#timer-label").fadeIn(800)
 
     // *********************START TIMER & CONVERT MILISECONDS TO SECONDS****************
     startSession = setInterval(timer, 1000)
@@ -72,7 +60,7 @@ $(document).ready(function() {
       if (countSession === 0) {
         playBell()
         clearInterval(startSession)
-        startBreak = setInterval(breakTime, 1000)
+        startBreak = setInterval(timer, 1000)
       }
 
       // format number output
@@ -82,7 +70,7 @@ $(document).ready(function() {
         $("#time-left").html(Math.floor(countSession / 60) + ":" + "0" + countSession % 60)
       }
 
-      // NOTE: This function is within the scope of the timer function. Does it need to be?
+      // *************BREAKTIME FUNCTION*********************
       function breakTime() {
         // decrement clock
         countBreak -= 1
@@ -103,13 +91,26 @@ $(document).ready(function() {
           $("#time-left").html(Math.floor(countBreak / 60) + ":" + "0" + countBreak % 60)
         }
       }
-      // re-start timer
-      timer()
     }
-
-  }) // end of #start_stop
+    // // re-start timer
+    // timer()
+  }) // end of #start
 
   // *****************PAUSE AND RESUME FUNCTIONS*******************
+  $("#pause").on("click", function() {
+    // play button click sound
+    playClick()
+    if ($("#pause").html() === "pause") {
+      pause()
+      // change button text to resume
+      $("#pause").html("resume")
+    } else if ($("#pause").html() === "resume") {
+      resume()
+      // change button text to pause
+      $("#pause").html("pause")
+    }
+  })
+
   function pause(){
     if(countSession > 0){
       pauseResume = countSession
@@ -131,7 +132,9 @@ $(document).ready(function() {
   }
 
   // *************RESET BUTTON******************
-  $("#reset").on("click", function() {
+  $("#reset").one("click", function() {
+    // play button click sound
+    playClick()
     // reset values to default
     countSession = 25
     countBreak = 5
